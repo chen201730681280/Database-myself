@@ -49,6 +49,8 @@
 </template>
 
 <script>
+// const axios =require('axios');
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -100,7 +102,8 @@ export default {
           let day = this.ruleForm.date.getDate();
           let dateFormat = year + "-" + month + "-" + day;
           this.ruleForm.date = dateFormat;
-          this.$http.post("/api/doctor/add", {
+          var that=this;
+          axios.post("/api/doctor/add", {
               name: this.ruleForm.name,
               sex: this.ruleForm.sex,
               date: this.ruleForm.date,
@@ -110,15 +113,17 @@ export default {
               department: this.ruleForm.department,
             })
             .then(function (res) {
+              console.log(res);
+              
               if (res.data.success) {
                 // 提示信息
-                this.$message({
+                that.$message({
                   showClose: true,
                   message: "添加成功！",
                   type: "success",
                 });
               } else {
-                this.$message({
+                that.$message({
                   showClose: true,
                   message: "添加失败！",
                   type: "error",
@@ -126,6 +131,32 @@ export default {
                 return false;
               }
             });
+          // this.$http.post("/api/doctor/add", {
+          //     name: this.ruleForm.name,
+          //     sex: this.ruleForm.sex,
+          //     date: this.ruleForm.date,
+          //     major: this.ruleForm.major,
+          //     education: this.ruleForm.education,
+          //     position: this.ruleForm.position,
+          //     department: this.ruleForm.department,
+          //   })
+          //   .then(function (res) {
+          //     if (res.data.success) {
+          //       // 提示信息
+          //       this.$message({
+          //         showClose: true,
+          //         message: "添加成功！",
+          //         type: "success",
+          //       });
+          //     } else {
+          //       this.$message({
+          //         showClose: true,
+          //         message: "添加失败！",
+          //         type: "error",
+          //       });
+          //       return false;
+          //     }
+          //   });
         }
       });
     },
